@@ -1,48 +1,54 @@
-# Variables de répertoires
+# Compiler et flags
+CC = gcc
+AS = nasm
+CFLAGS = -Wall -Wextra -Werror -I./
+ASFLAGS = -f elf64
+LIBASM = libasm.h
+
+# Dossiers
 SRC_DIR = srcs
 TEST_DIR = tests
-INC_DIR = .
 
-# Fichiers sources
-SRC_FILES = $(SRC_DIR)/ft_write.s
-TEST_FILES = $(TEST_DIR)/ft_write.c
+# Fichiers sources en assembleur et en C
+ASM_SRC = $(wildcard $(SRC_DIR)/*.s)
+C_SRC = $(wildcard $(TEST_DIR)/*.c)
+
+# Nom de la bibliothèque et de l'exécutable
+LIB_NAME = libasm.a
+NAME = libasm
 
 # Fichiers objets
-OBJ_FILES = $(SRC_FILES:.s=.o) $(TEST_FILES:.c=.o)
+ASM_OBJ = $(ASM_SRC:.s=.o)
+C_OBJ = $(C_SRC:.c=.o)
 
-# Nom de l'exécutable
-EXEC = $(TEST_DIR)/ft_write
+# Règles par défaut
+all: $(LIB_NAME) $(NAME)
 
-# Compilateur et options
-CC = gcc
-NASM = nasm
-CFLAGS = -Wall -Wextra -I$(INC_DIR)
-ASMFLAGS = -f elf64
+# Création de la bibliothèque statique libasm.a
+$(LIB_NAME): $(ASM_OBJ)
+	ar rcs $(LIB_NAME) $(ASM_OBJ)
 
-# Règle principale
-all: $(EXEC)
+# Compilation de l'exécutable avec la bibliothèque
+$(NAME): $(C_OBJ) $(LIB_NAME)
+	$(CC) $(CFLAGS) -o $(NAME) $(C_OBJ) -L. -lasm
 
-# Lier les objets pour créer l'exécutable
-$(EXEC): $(OBJ_FILES)
-	$(CC) -o $(EXEC) $(OBJ_FILES)
+# Compilation des fichiers assembleur
+%.o: %.s $(LIBASM)
+	$(AS) $(ASFLAGS) $< -o $@
 
-# Compiler les fichiers assembleur (.s) en objets (.o)
-$(SRC_DIR)/%.o: $(SRC_DIR)/%.s
-	$(NASM) $(ASMFLAGS) -o $@ $<
+# Compilation des fichiers C
+%.o: %.c $(LIBASM)
+	$(CC) $(CFLAGS) -c $< -o $@
 
-# Compiler les fichiers C (.c) en objets (.o)
-$(TEST_DIR)/%.o: $(TEST_DIR)/%.c
-	$(CC) $(CFLAGS) -c -o $@ $<
-
-# Nettoyer les fichiers objets et l'exécutable
+# Nettoyage
 clean:
-	rm -f $(SRC_DIR)/*.o $(TEST_DIR)/*.o $(EXEC)
+	rm -f $(ASM_OBJ) $(C_OBJ)
 
-# Nettoyer les fichiers objets, y compris les fichiers générés par l'assembleur
 fclean: clean
-	rm -f $(EXEC)
+	rm -f $(LIB_NAME) $(NAME)
 
-# Recréer les fichiers objets et l'exécutable
 re: fclean all
 
 .PHONY: all clean fclean re
+
+
