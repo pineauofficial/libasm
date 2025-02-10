@@ -8,4 +8,6 @@ int main() {
     ft_strlen_test();
     printf("%s", "\n\n");
     ft_strcpy_test();
+    printf("%s", "\n\n");
+    ft_strcmp_test();
 }

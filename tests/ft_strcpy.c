@@ -5,7 +5,7 @@ int ft_strcpy_test() {
     char *src = "Bonjour";
 
     printf("dest contient (custom)    %s\n", ft_strcpy(dest, src));
-    printf("dest contient (originale) %s\n", strcpy(dest, src));
+    printf("dest contient (originale) %s", strcpy(dest, src));
 
     return 0;
 }
