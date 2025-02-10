@@ -14,14 +14,13 @@ extern ssize_t ft_read(int fildes, void *buf, size_t nbyte);
 extern size_t ft_strlen( const char * theString );
 extern char* ft_strcpy(char* destination, const char* source);
 extern int ft_strcmp( const char * first, const char * second );
+extern char * ft_strdup( const char * source );
 
-int ft_read_test();
 int ft_write_test();
+int ft_read_test();
 int ft_strlen_test();
-int ft_strdup_test();
 int ft_strcpy_test();
 int ft_strcmp_test();
+int ft_strdup_test();
 
 #endif
-
-// clear && make && ./libasm && make fclean

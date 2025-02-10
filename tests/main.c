@@ -10,4 +10,6 @@ int main() {
     ft_strcpy_test();
     printf("%s", "\n\n");
     ft_strcmp_test();
+    printf("%s", "\n\n");
+    ft_strdup_test();
 }
