@@ -5,12 +5,23 @@ section .text
     ; rdi = theString
 
 ft_strlen:
-    cmp rdi
+    xor rax, rax
 
-strlen( *s)
-    int i = 0;
-    while(s[i] != \0)
-        i++;
-    return i;
+.boucle:
+    ; methode -1-
+    ; mov cl, byte [rdi]  ; utilise cl comme registre tmp pour stocker les characteres
+    ; test cl, cl         ; test si le caractere est nul
+    ; jz .renvoie
+
+    ; methode -2-
+    cmp byte [rdi], 0
+    je .renvoie 
+
+    inc rax
+    inc rdi
+    jmp .boucle
+
+.renvoie:
+    ret
 
 

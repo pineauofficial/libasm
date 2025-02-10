@@ -4,4 +4,6 @@ int main() {
     ft_read_test();
     printf("%s", "\n\n");
     ft_write_test();
+    printf("%s", "\n\n");
+    ft_strlen_test();
 }
