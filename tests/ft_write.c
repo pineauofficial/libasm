@@ -5,6 +5,8 @@ int ft_write_test() {
     size_t length = 22;
 
     ft_write(1, message, length);
-
+    printf("%s   \n", "(custom)");
+    write(1, message, length);
+    printf("%s", "(originale)");
     return 0;
 }
