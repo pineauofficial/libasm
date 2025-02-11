@@ -7,10 +7,13 @@ int ft_read_test() {
     }
 
     char buffer[7];
-    ft_read(fd, buffer, sizeof(buffer));
+    printf(" [retour %ld]", ft_read(fd, buffer, sizeof(buffer)));
     write(1, buffer, sizeof(buffer));
     printf(" %s\n", "(custom)");
-    read(fd, buffer, sizeof(buffer));
+    
+    lseek(fd, 0, SEEK_SET); // reset la position au debut du fichier
+
+    printf(" [retour %ld]", read(fd, buffer, sizeof(buffer)));
     write(1, buffer, sizeof(buffer));
     printf(" %s", "(originale)");
 
