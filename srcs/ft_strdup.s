@@ -15,7 +15,7 @@ ft_strdup:
 
     mov rdi, rax
 
-    call malloc wrt ..plt;rax contient malloc
+    call malloc wrt ..plt ;rax contient malloc
     test rax, rax ; check malloc
     jz .error
 
@@ -25,5 +25,6 @@ ft_strdup:
     ret
 
 .error:
-    pop rdi
+    pop rdi ;nettoie la stack
+    xor rax, rax ;pour etre sur que rax = 0
     ret
